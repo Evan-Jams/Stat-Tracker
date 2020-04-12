@@ -99,7 +99,12 @@ input:focus {
 
 .stats {
   width: 70%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
+}
+
+ul {
+  text-align: left;
+  list-style: none;
 }
 
                           /* Scorecard Form */
