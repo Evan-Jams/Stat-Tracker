@@ -21,7 +21,7 @@ class Profile extends Component{
   }
   async componentDidMount(){
     await this.getHoles()
-    this.getUser(sessionStorage.getItem('user'))
+    this.calcStats()
 
   }
 
@@ -32,49 +32,68 @@ class Profile extends Component{
     this.setState({ holes: data })
   }
 
-  calcStats = () => {
+  calcStats = async () => {
+    await this.getUser(sessionStorage.getItem('user'))
     let rounds = this.state.currentUser.rounds
     if (this.state.currentUser){
       let total = 0
+      let currentState = {
+        ...this.state,
+        handicap: 0,
+        holeInOnes: 0,
+        eagles: 0,
+        birdies: 0,
+        pars: 0,
+        bogeys: 0,
+        doubleBogeys: 0,
+        worse: 0
+      }
       for(let x = 0; x < rounds.length; x++){
         let index = x
 
         for(let i = 1; i <= 18; i++){
           let score = parseInt(rounds[index][`strokes${i}`])
-          let par = this.state.holes[i - 1].par
 
-          if (score === 1) {
-            this.setState({
-              holeInOnes: this.state.holeInOnes += 1
-            })
-          } else if (score - par === -2) {
-            this.setState({
-              eagles: this.state.eagles += 1
-            })
-          } else if (score - par === -1) {
-            this.setState({
-              birdies: this.state.birdies += 1
-            })
-          } else if (score === par) {
-            this.setState({
-              pars: this.state.pars += 1
-            })
-          } else if (score - par === 1) {
-            this.setState({
-              bogeys: this.state.bogeys += 1
-            })
-          } else if (score - par === 2) {
-            this.setState({
-              doubleBogeys: this.state.doubleBogeys += 1
-            })
-          } else {
-            this.setState({
-              worse: this.state.worse += 1
-            })
+          if (score > 0) {
+            let par = this.state.holes[i - 1].par
+
+            if (score === 1) {
+              currentState.holeInOnes += 1
+
+            } else if (score - par <= -2) {
+              currentState.eagles += 1
+
+            } else if (score - par === -1) {
+              currentState.birdies += 1
+
+            } else if (score === par) {
+              currentState.pars += 1
+
+            } else if (score - par === 1) {
+              currentState.bogeys += 1
+
+            } else if (score - par === 2) {
+              currentState.doubleBogeys += 1
+
+            } else {
+              currentState.worse += 1
+            }
+            total += score
+          }
         }
-        total += score
       }
-      }
+      console.log(currentState);
+      this.setState({
+        ...this.state,
+        handicap: currentState.handicap,
+        holeInOnes: currentState.holeInOnes,
+        eagles: currentState.eagles,
+        birdies: currentState.birdies,
+        pars: currentState.pars,
+        bogeys: currentState.bogeys,
+        doubleBogeys: currentState.doubleBogeys,
+        worse: currentState.worse
+      })
       let handicap = Math.round(((total / rounds.length) - 72) * 10) / 10
       this.setState({
         handicap: handicap
@@ -96,7 +115,6 @@ class Profile extends Component{
     let user = await response.json()
     this.setState({ currentUser: user }, () => {
       console.log(this.state.currentUser);
-      this.calcStats()
     })
   }
 
@@ -107,11 +125,10 @@ class Profile extends Component{
       headers: {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json',
-        // 'Authorization': 'Bearer ' + sessionStorage.getItem('token')
       }
     })
     let data = await response.json()
-    let currentUser = {...this.state.currentUser}
+    console.log('calcStats called!');
     this.calcStats()
     console.log(data);
   }
@@ -129,17 +146,23 @@ class Profile extends Component{
           <div className="main">
             <div className="info">
               <div className="photo">
-                Photo
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" alt="personal photo" />
               </div>
               <div>
                 <p>
                 {
                   this.state.currentUser
-                  ? <span>{this.state.currentUser.first_name} {this.state.currentUser.last_name}</span>
+                  ? <span className="name-handicap">
+                      {this.state.currentUser.first_name} {this.state.currentUser.last_name}
+                    </span>
                   : 'Name'
                 }
                 </p>
-                <p>Handicap: {this.state.handicap}</p>
+                <p className="name-handicap">Handicap:
+                  <span>
+                    {this.state.handicap}
+                  </span>
+                </p>
               </div>
             </div>
             <div className="stats">
@@ -150,13 +173,41 @@ class Profile extends Component{
                 : null
               }</h3>
               <ul>
-                <li>Hole-In-Ones: {this.state.holeInOnes}</li>
-                <li>Eagles: {this.state.eagles}</li>
-                <li>Birdies: {this.state.birdies}</li>
-                <li>Pars: {this.state.pars}</li>
-                <li>Bogeys: {this.state.bogeys}</li>
-                <li>Double Bogeys: {this.state.doubleBogeys}</li>
-                <li>Worse: {this.state.worse}</li>
+                <li>Hole-In-Ones:
+                  <span>
+                    {this.state.holeInOnes}
+                  </span>
+                </li>
+                <li>Eagles:
+                  <span>
+                    {this.state.eagles}
+                  </span>
+                </li>
+                <li>Birdies:
+                  <span>
+                    {this.state.birdies}
+                  </span>
+                </li>
+                <li>Pars:
+                  <span>
+                    {this.state.pars}
+                  </span>
+                </li>
+                <li>Bogeys:
+                  <span>
+                    {this.state.bogeys}
+                  </span>
+                </li>
+                <li>Double Bogeys:
+                  <span>
+                    {this.state.doubleBogeys}
+                  </span>
+                </li>
+                <li>Worse:
+                  <span>
+                    {this.state.worse}
+                  </span>
+                </li>
               </ul>
               <div>
                 <button onClick={() => this.toggleScorecard()}>New Round</button>

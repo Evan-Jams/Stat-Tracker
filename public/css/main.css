@@ -5,7 +5,10 @@
 }
 
 #root {
-  text-align: center
+  text-align: center;
+  background-color: gainsboro;
+  height: 200vh;
+  padding-top: 50px;
 }
 
                       /* Home page styling */
@@ -48,7 +51,6 @@ input:focus {
   width: 100%;
   height: 32px;
   margin-top: 10%;
-  /* border: 1px solid grey; */
 }
 
 #submit, #login {
@@ -83,24 +85,45 @@ input:focus {
   flex-direction: column;
   align-items: center;
   margin-top: 50px;
-  height: 100%;
+  /* height: 100%; */
 }
 
 .main {
   display: flex;
   justify-content: flex-start;
   width: 80%;
+  padding: 20px;
+  box-shadow: 5px 5px 10px grey;
+  background: #fff;
 }
 
 .photo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid black;
   height: 300px;
   width: 250px;
+  overflow: hidden;
+}
+
+.photo > img {
+  height: 100%;
 }
 
 .stats {
   width: 70%;
+  background: #fff;
   /* border: 1px solid black; */
+}
+
+h2 {
+  font-size: 30px;
+  margin: 0;
+}
+
+.name-handicap {
+  font-size: 18px;
 }
 
 button {
@@ -120,12 +143,23 @@ ul {
   list-style: none;
 }
 
+li {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dotted gainsboro;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
                           /* Scorecard Form */
 
 #scorecard {
   width: 90%;
   /* height: 30vh; */
   border: 1px solid grey;
+  margin-top: 50px;
+  background: #fff;
+  box-shadow: 5px 5px 10px grey;
 }
 
 .date-input {

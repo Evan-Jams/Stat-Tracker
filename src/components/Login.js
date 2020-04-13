@@ -1,5 +1,4 @@
 import React, { useState, Component } from 'react'
-import { useForm } from './useForm'
 
 export default class Login extends Component {
   constructor(props){
@@ -9,17 +8,9 @@ export default class Login extends Component {
       password: '',
       currentUser: null
     }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidMount(){
-    this.setState({
-      currentUser: this.state.currentUser
-    })
-  }
-
-  handleChange(event){
+  handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
     })
@@ -42,7 +33,6 @@ export default class Login extends Component {
     if (data.status === 401){
       return
     }
-
     sessionStorage.setItem('token', data.token);
     sessionStorage.setItem('user', data.user.id);
     this.props.history.push('/profile')
