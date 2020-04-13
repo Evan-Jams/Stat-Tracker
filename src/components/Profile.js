@@ -8,6 +8,7 @@ class Profile extends Component{
     this.state = {
       currentUser: null,
       holes: [],
+      scorecard: false,
       handicap: 0,
       holeInOnes: 0,
       eagles: 0,
@@ -18,8 +19,8 @@ class Profile extends Component{
       worse: 0
     }
   }
-  componentDidMount(){
-    this.getHoles()
+  async componentDidMount(){
+    await this.getHoles()
     this.getUser(sessionStorage.getItem('user'))
 
   }
@@ -73,7 +74,6 @@ class Profile extends Component{
         }
         total += score
       }
-
       }
       let handicap = Math.round(((total / rounds.length) - 72) * 10) / 10
       this.setState({
@@ -111,8 +111,15 @@ class Profile extends Component{
       }
     })
     let data = await response.json()
-
+    let currentUser = {...this.state.currentUser}
+    this.calcStats()
     console.log(data);
+  }
+
+  toggleScorecard = () => {
+    this.setState({
+      scorecard: !this.state.scorecard
+    })
   }
 
   render(){
@@ -152,13 +159,16 @@ class Profile extends Component{
                 <li>Worse: {this.state.worse}</li>
               </ul>
               <div>
-                <button>New Round</button>
+                <button onClick={() => this.toggleScorecard()}>New Round</button>
               </div>
             </div>
           </div>
-          <div className="round-form">
-            <Round createRound={this.createRound}/>
-          </div>
+          {
+            this.state.scorecard
+            ? <Round createRound={this.createRound} holes={this.state.holes} toggleScorecard={this.toggleScorecard}/>
+            : null
+          }
+
         </div>
       </>
     )
