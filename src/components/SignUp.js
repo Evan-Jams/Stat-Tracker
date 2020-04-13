@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import { useForm } from './useForm'
+import Axios from 'axios'
 
 class SignUp extends Component{
   constructor(props){
@@ -26,30 +27,22 @@ class SignUp extends Component{
 
   createUser = async () => {
     let postData = {user: this.state}
-    let response = await fetch('http://localhost:3000/users', {
-      body: JSON.stringify(postData),
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
-      }
-    })
-    let data = await response.json()
-    console.log(data);
+    let response = await Axios.post('http://localhost:3000/users', postData)
+    this.props.history.push('/login')
   }
 
   render(){
     return(
       <>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} id="signup-form">
           <label htmlFor="first_name">First Name</label>
-            <input name="first_name" value={this.state.first_name} onChange={this.handleChange} />
+            <input name="first_name" value={this.state.first_name} onChange={this.handleChange} required/>
           <label htmlFor="last_name">Last Name</label>
-            <input name="last_name" value={this.state.last_name} onChange={this.handleChange} />
+            <input name="last_name" value={this.state.last_name} onChange={this.handleChange} required/>
           <label htmlFor="username">Username</label>
-            <input name="username" value={this.state.username} onChange={this.handleChange} />
+            <input name="username" value={this.state.username} onChange={this.handleChange} required/>
           <label htmlFor="password">Password</label>
-            <input type="password" name="password" value={this.state.password} onChange={this.handleChange} />
+            <input type="password" name="password" value={this.state.password} onChange={this.handleChange} required/>
           <div className="submit-container">
             <input id="submit" type="submit" value="Sign Up" />
             or
@@ -61,4 +54,4 @@ class SignUp extends Component{
   }
 }
 
-export default SignUp
+export default withRouter(SignUp)

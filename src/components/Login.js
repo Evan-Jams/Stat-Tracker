@@ -1,54 +1,56 @@
-import React, { useState, Component } from 'react'
+import React, { useState } from 'react'
 
-export default class Login extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      username: '',
-      password: '',
-      currentUser: null
-    }
-  }
+const Login = (props) => {
 
-  handleChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value
-    })
-  }
-  // console.log(data);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  handleSubmit = async (event) => {
-    event.preventDefault()
-    // console.log(values);
-    let postData = {user: this.state}
-    let response = await fetch('http://localhost:3000/users/login', {
-      body: JSON.stringify(postData),
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
+  const handleUsername = event => setUsername(event.target.value);
+  const handlePassword = event => setPassword(event.target.value);
+
+    let handleSubmit = async (event) => {
+      event.preventDefault()
+      let postData = {
+        user: {username: username, password: password}
       }
-    })
-    const data = await response.json()
-    if (data.status === 401){
-      return
+      let response = await fetch('http://localhost:3000/users/login', {
+        body: JSON.stringify(postData),
+        method: 'POST',
+        headers: {
+           'Accept': 'application/json, text/plain, */*',
+           'Content-Type': 'application/json'
+        }
+      })
+      const data = await response.json()
+      if (data.status === 401) {
+        return
+      }
+      sessionStorage.setItem('token', data.token);
+      sessionStorage.setItem('user', data.user.id);
+      props.history.push('/profile')
     }
-    sessionStorage.setItem('token', data.token);
-    sessionStorage.setItem('user', data.user.id);
-    this.props.history.push('/profile')
-  }
 
-  render(){
-    return(
-      <>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="username">Username</label>
-          <input name="username" value={this.state.username} onChange={this.handleChange} />
-          <label htmlFor="password">Password</label>
-          <input type="password" name="password" value={this.state.password} onChange={this.handleChange} />
-          <input id="submit" type="submit" value="Log In" />
-        </form>
-      </>
-    )
-  }
+  return (
+    <>
+      <div className="home-container">
+        <div className="home-page">
+          <h1>Welcome to Golf Stats Tracker</h1>
+          <p id="app-description">Simply Login or Sign Up, and begin tracking all your stats in one conveinent location !</p>
+          <form onSubmit={handleSubmit} id="login-form">
+            <label htmlFor="username">Username</label>
+            <input name="username" value={username} onChange={handleUsername} required/>
+            <label htmlFor="password">Password</label>
+            <input type="password" name="password" value={password} onChange={handlePassword} required/>
+            <p id="forgot-pass">Forgot Your Password?
+              <br/>
+              <a href="#">Click Here</a>
+            </p>
+            <input id="submit" type="submit" value="Log In" />
+          </form>
+        </div>
+      </div>
+
+    </>
+  )
 }
+export default Login;

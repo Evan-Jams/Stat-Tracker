@@ -149,62 +149,64 @@ class Profile extends Component{
                 <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" alt="personal photo" />
               </div>
               <div>
-                <p>
+                
                 {
                   this.state.currentUser
-                  ? <span className="name-handicap">
+                  ? <h2>
                       {this.state.currentUser.first_name} {this.state.currentUser.last_name}
-                    </span>
+                    </h2>
                   : 'Name'
                 }
-                </p>
+                
                 <p className="name-handicap">Handicap:
-                  <span>
+                  <span className="numbers">
                     {this.state.handicap}
                   </span>
                 </p>
               </div>
             </div>
             <div className="stats">
-              <h2>Stats</h2>
-              <h3>Total Rounds Played: {
-                this.state.currentUser
-                ? this.state.currentUser.rounds.length
-                : null
-              }</h3>
+              <h2>Statistics</h2>
+              <h3>Total Rounds Played:
+                <span className="numbers">{
+                  this.state.currentUser
+                  ? this.state.currentUser.rounds.length
+                  : null
+                }</span>
+              </h3>
               <ul>
                 <li>Hole-In-Ones:
-                  <span>
+                  <span className="numbers">
                     {this.state.holeInOnes}
                   </span>
                 </li>
                 <li>Eagles:
-                  <span>
+                  <span className="numbers">
                     {this.state.eagles}
                   </span>
                 </li>
                 <li>Birdies:
-                  <span>
+                  <span className="numbers">
                     {this.state.birdies}
                   </span>
                 </li>
                 <li>Pars:
-                  <span>
+                  <span className="numbers">
                     {this.state.pars}
                   </span>
                 </li>
                 <li>Bogeys:
-                  <span>
+                  <span className="numbers">
                     {this.state.bogeys}
                   </span>
                 </li>
                 <li>Double Bogeys:
-                  <span>
+                  <span className="numbers">
                     {this.state.doubleBogeys}
                   </span>
                 </li>
                 <li>Worse:
-                  <span>
+                  <span className="numbers">
                     {this.state.worse}
                   </span>
                 </li>
