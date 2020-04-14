@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import Round from './Round'
 
-
+const baseUrl = 'https://golf-stat-tracker-backend.herokuapp.com/'
 
 class Profile extends Component{
   constructor(props){

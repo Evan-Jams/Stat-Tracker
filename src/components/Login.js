@@ -1,5 +1,11 @@
 import React, { useState } from 'react'
 
+if (process.env.NODE_ENV === 'development') {
+  let baseURL = 'http://localhost:3000'
+} else {
+  let baseURL = 'https://golf-stat-tracker-backend.herokuapp.com'
+}
+
 const Login = (props) => {
 
   const [username, setUsername] = useState('');
@@ -13,7 +19,7 @@ const Login = (props) => {
       let postData = {
         user: {username: username, password: password}
       }
-      let response = await fetch('http://localhost:3000/users/login', {
+      let response = await fetch(`${baseURL}/users/login`, {
         body: JSON.stringify(postData),
         method: 'POST',
         headers: {

@@ -3,6 +3,12 @@ import {Link, withRouter} from 'react-router-dom'
 import { useForm } from './useForm'
 import Axios from 'axios'
 
+if (process.env.NODE_ENV === 'development') {
+  let baseURL = 'http://localhost:3000'
+} else {
+  let baseURL = 'https://golf-stat-tracker-backend.herokuapp.com'
+}
+
 class SignUp extends Component{
   constructor(props){
     super(props)
@@ -27,7 +33,7 @@ class SignUp extends Component{
 
   createUser = async () => {
     let postData = {user: this.state}
-    let response = await Axios.post('http://localhost:3000/users', postData)
+    let response = await Axios.post(`${baseURL}/users`, postData)
     this.props.history.push('/login')
   }
 
