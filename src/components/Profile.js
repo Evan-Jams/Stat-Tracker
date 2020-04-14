@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import Round from './Round'
 
 
+
 class Profile extends Component{
   constructor(props){
     super(props)
@@ -149,7 +150,7 @@ class Profile extends Component{
                 <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" alt="personal photo" />
               </div>
               <div>
-                
+
                 {
                   this.state.currentUser
                   ? <h2>
@@ -157,7 +158,7 @@ class Profile extends Component{
                     </h2>
                   : 'Name'
                 }
-                
+
                 <p className="name-handicap">Handicap:
                   <span className="numbers">
                     {this.state.handicap}
