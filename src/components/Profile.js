@@ -146,9 +146,19 @@ class Profile extends Component{
     })
   }
 
+  logout = () => {
+    this.setState({currentUser: null}, () => {
+      sessionStorage.clear()
+      this.props.history.replace('/login')
+    })
+  }
+
   render(){
     return(
       <>
+        <div id="logout">
+          <button id="logout-btn" onClick={() => this.logout()}>Log Out</button>
+        </div>
         <div className="profile-page">
           <div className="main">
             <div className="info">

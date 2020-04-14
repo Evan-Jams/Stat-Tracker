@@ -42,7 +42,7 @@ h1 {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  width: 25%;
+  width: 275px;
   height: 300px;
   margin: 35px;
   border: 1px solid grey;
@@ -63,7 +63,7 @@ h1 {
   justify-content: flex-start;
   flex-direction: column;
   align-items: center;
-  width: 25%;
+  width: 275px;
   height: 300px;
   margin: 35px;
   border: 1px solid grey;
@@ -138,13 +138,23 @@ button:focus {
 }
 
                         /* Profile Page */
+#logout {
+  display: flex;
+  justify-content: flex-end;
+  width: 90%;
+  margin: 0 auto;
+}
+
+#logout-btn {
+  box-shadow: 4px 4px 5px grey; 
+}
 
 .profile-page {
   display: flex;
   justify-content: space-around;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 20px;
   /* height: 100%; */
 }
 
