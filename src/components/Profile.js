@@ -111,7 +111,7 @@ class Profile extends Component{
   }
 
   getUser = async (id) => {
-    let response = await fetch(`http://localhost:3000/users/${id}`, {
+    let response = await fetch(`${baseURL}/${id}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json, text/plain, */*',
@@ -126,7 +126,7 @@ class Profile extends Component{
   }
 
   createRound = async (newData) => {
-    let response = await fetch(`http://localhost:3000/rounds`, {
+    let response = await fetch(`${baseURL}/rounds`, {
       body: JSON.stringify(newData),
       method: 'POST',
       headers: {
