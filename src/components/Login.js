@@ -3,9 +3,9 @@ import React, { useState } from 'react'
 let baseURL = process.env.REACT_APP_BASEURL
 
 if (process.env.NODE_ENV === 'development') {
-  let baseURL = 'http://localhost:3000'
+  baseURL = 'http://localhost:3000'
 } else {
-  let baseURL = 'https://golf-stat-tracker-backend.herokuapp.com'
+  baseURL = 'https://golf-stat-tracker-backend.herokuapp.com'
 }
 
 export const Login = (props) => {
