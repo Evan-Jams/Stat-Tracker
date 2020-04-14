@@ -111,7 +111,7 @@ class Profile extends Component{
   }
 
   getUser = async (id) => {
-    let response = await fetch(`${baseURL}/${id}`, {
+    let response = await fetch(`${baseURL}/users/${id}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json, text/plain, */*',
