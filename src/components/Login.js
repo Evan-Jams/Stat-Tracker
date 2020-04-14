@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 
+let baseURL = process.env.REACT_APP_BASEURL
+
 if (process.env.NODE_ENV === 'development') {
   let baseURL = 'http://localhost:3000'
 } else {
   let baseURL = 'https://golf-stat-tracker-backend.herokuapp.com'
 }
 
-const Login = (props) => {
+export const Login = (props) => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -59,4 +61,4 @@ const Login = (props) => {
     </>
   )
 }
-export default Login;
+// export default Login;

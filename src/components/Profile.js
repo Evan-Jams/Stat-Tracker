@@ -1,7 +1,13 @@
 import React, {Component} from 'react'
 import Round from './Round'
 
-const baseUrl = 'https://golf-stat-tracker-backend.herokuapp.com/'
+let baseURL = process.env.REACT_APP_BASEURL
+
+if (process.env.NODE_ENV === 'development') {
+  let baseURL = 'http://localhost:3000'
+} else {
+  let baseURL = 'https://golf-stat-tracker-backend.herokuapp.com'
+}
 
 class Profile extends Component{
   constructor(props){
@@ -27,7 +33,7 @@ class Profile extends Component{
   }
 
   getHoles = async () => {
-    let response = await fetch('http://localhost:3000/holes')
+    let response = await fetch(`${baseURL}/holes`)
     let data = await response.json()
     console.log(data);
     this.setState({ holes: data })
